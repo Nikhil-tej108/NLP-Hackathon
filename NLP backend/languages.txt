@@ -1,0 +1,9 @@
+| **Language**             | **Code** | **Example usage**                                 |
+| ------------------------ | -------- | ------------------------------------------------- |
+| **Hindi**                | `hi`     | `GoogleTranslator(source='auto', target='hi')`    |
+| **Kannada**              | `kn`     | `GoogleTranslator(source='auto', target='kn')`    |
+| **Telugu**               | `te`     | `GoogleTranslator(source='auto', target='te')`    |
+| **Chinese (Simplified)** | `zh-CN`  | `GoogleTranslator(source='auto', target='zh-CN')` |
+| **Japanese**             | `ja`     | `GoogleTranslator(source='auto', target='ja')`    |
+| **German**               | `de`     | `GoogleTranslator(source='auto', target='de')`    |
+| **Tamil**                | `ta`     | `GoogleTranslator(source='auto', target='ta')`    |
