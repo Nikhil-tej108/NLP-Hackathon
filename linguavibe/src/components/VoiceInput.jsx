@@ -1,22 +1,31 @@
 import React from 'react';
 
-const VoiceInput = ({ isRecording, onToggleRecording }) => {
+const VoiceInput = ({ 
+  isRecording, 
+  onToggleRecording,
+  disabled = false 
+}) => {
+  // VoiceInput should NOT manage WebRTC - that's App.jsx's job
+  // This component only handles UI and calls the parent callback
+  
   return (
     <button
-      className={`voice-input-btn ${isRecording ? 'recording-active' : ''}`}
+      className={`voice-input-btn ${isRecording ? 'recording' : ''}`}
       onClick={onToggleRecording}
-      title={isRecording ? 'Stop Recording' : 'Start Voice Recording'}
+      disabled={disabled}
+      title={disabled ? 'Not connected' : (isRecording ? 'Stop Recording' : 'Start Recording')}
     >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M12 15C13.66 15 15 13.66 15 12V6C15 4.34 13.66 3 12 3C10.34 3 9 4.34 9 6V12C9 13.66 10.34 15 12 15Z"
-          fill="currentColor"
-        />
-        <path
-          d="M17 11C17 13.76 14.76 16 12 16C9.24 16 7 13.76 7 11H5C5 14.53 7.61 17.43 11 17.92V21H13V17.92C16.39 17.43 19 14.53 19 11H17Z"
-          fill="currentColor"
-        />
-      </svg>
+      {isRecording ? (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+        </svg>
+      ) : (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+      )}
+      {isRecording && <span className="recording-pulse"></span>}
     </button>
   );
 };

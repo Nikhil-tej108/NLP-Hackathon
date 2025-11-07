@@ -1,13 +1,13 @@
 import React from 'react';
 import MessageBubble from './MessageBubble';
 
+
 const ChatWindow = ({ messages, emojiMode, isTranslating }) => {
   return (
     <div className="chat-window">
       <div className="chat-header">
         <h1 className="app-logo">
-          LinguaVibe
-          <span className="logo-icon">📊</span>
+          <img src=''></img>
         </h1>
         <p className="app-subtitle">Real-time Translation Chat</p>
         

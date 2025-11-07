@@ -10,12 +10,15 @@ const InputBar = ({
   onSendMessage,
   isRecording,
   onToggleRecording,
-  onEmojiClick
+  onEmojiClick,
+  disabled = false
 }) => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      onSendMessage();
+      if (!disabled) {
+        onSendMessage();
+      }
     }
   };
 
@@ -26,30 +29,39 @@ const InputBar = ({
           selectedLang={selectedLang}
           onLanguageChange={onLanguageChange}
           position="input"
+          disabled={disabled}
         />
 
         <input
           type="text"
           className="message-input-field"
-          placeholder="Speak or Type a message..."
+          placeholder={disabled ? "Connecting..." : "Speak or Type a message..."}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyPress={handleKeyPress}
+          disabled={disabled}
         />
 
-        <button className="emoji-btn" onClick={onEmojiClick} title="Add Emoji">
+        <button 
+          className="emoji-btn" 
+          onClick={onEmojiClick} 
+          title="Add Emoji"
+          disabled={disabled}
+        >
           😊
         </button>
 
         <VoiceInput
           isRecording={isRecording}
           onToggleRecording={onToggleRecording}
+          disabled={disabled}
         />
 
         <button 
           className="send-message-btn" 
           onClick={onSendMessage}
           title="Send Message"
+          disabled={disabled || !inputText.trim()}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z" fill="currentColor"/>
@@ -57,7 +69,6 @@ const InputBar = ({
         </button>
       </div>
       
-      <div className="sparkle-decoration">✨</div>
     </div>
   );
 };

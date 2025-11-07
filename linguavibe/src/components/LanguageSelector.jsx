@@ -1,47 +1,39 @@
 import React from 'react';
 
-const LanguageSelector = ({ selectedLang, onLanguageChange, position = 'input' }) => {
+const LanguageSelector = ({ 
+  selectedLang, 
+  onLanguageChange, 
+  position,
+  disabled = false 
+}) => {
   const languages = [
-    { code: 'hindi', label: 'Hindi' },
-    { code: 'tamil', label: 'Tamil' },
-    { code: 'telugu', label: 'Telugu' },
-    { code: 'bengali', label: 'Bengali' },
-    { code: 'marathi', label: 'Marathi' },
-    { code: 'gujarati', label: 'Gujarati' },
-    { code: 'kannada', label: 'Kannada' },
-    { code: 'malayalam', label: 'Malayalam' },
+    { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'es', name: 'Spanish', flag: '🇪🇸' },
+    { code: 'fr', name: 'French', flag: '🇫🇷' },
+    { code: 'de', name: 'German', flag: '🇩🇪' },
+    { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
+    { code: 'ko', name: 'Korean', flag: '🇰🇷' },
+    { code: 'zh-CN', name: 'Chinese', flag: '🇨🇳' }
   ];
 
-  if (position === 'input') {
-    return (
-      <div className="language-badge">
-        <select
-          value={selectedLang}
-          onChange={(e) => onLanguageChange(e.target.value)}
-          className="language-select-input"
-        >
-          {languages.map(lang => (
-            <option key={lang.code} value={lang.code}>
-              {lang.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
+  const selectedLanguage = languages.find(lang => lang.code === selectedLang);
 
   return (
-    <select
-      value={selectedLang}
-      onChange={(e) => onLanguageChange(e.target.value)}
-      className="language-dropdown"
-    >
-      {languages.map(lang => (
-        <option key={lang.code} value={lang.code}>
-          {lang.label}
-        </option>
-      ))}
-    </select>
+    <div className={`language-selector ${position}`}>
+      <select
+        value={selectedLang}
+        onChange={(e) => onLanguageChange(e.target.value)}
+        disabled={disabled}
+        className="language-dropdown"
+      >
+        {languages.map(lang => (
+          <option key={lang.code} value={lang.code}>
+            {lang.flag} {lang.name}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 
