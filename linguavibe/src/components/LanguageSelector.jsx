@@ -14,7 +14,8 @@ const LanguageSelector = ({
     { code: 'de', name: 'German', flag: '🇩🇪' },
     { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
     { code: 'ko', name: 'Korean', flag: '🇰🇷' },
-    { code: 'zh-CN', name: 'Chinese', flag: '🇨🇳' }
+    { code: 'zh-CN', name: 'Chinese', flag: '🇨🇳' },
+    { code: 'kn', name: 'kannada', flag: 'IN' }
   ];
 
   const selectedLanguage = languages.find(lang => lang.code === selectedLang);

@@ -1,6 +1,22 @@
 import { io } from 'socket.io-client';
 
-const BACKEND_URL = 'http://localhost:8000';
+// Automatically detect backend URL based on how the page was accessed
+const getBackendURL = () => {
+    // If accessed via network IP, use that IP with port 8000
+    // If accessed via localhost, use localhost:8000
+    const hostname = window.location.hostname;
+    
+    // If hostname is localhost or 127.0.0.1, use localhost
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:8000';
+    }
+    
+    // Otherwise, use the same hostname with port 8000
+    return `http://${hostname}:8000`;
+};
+
+const BACKEND_URL = getBackendURL();
+console.log('Backend URL:', BACKEND_URL);
 
 class WebRTCManager {
     constructor() {
