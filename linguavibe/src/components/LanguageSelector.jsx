@@ -1,27 +1,44 @@
 import React from 'react';
-import '../styles/LanguageSelector.css';
 
-const LanguageSelector = ({ selectedLang, onLangChange }) => {
+const LanguageSelector = ({ selectedLang, onLanguageChange, position = 'input' }) => {
   const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'hi', name: 'Hindi' },
-    { code: 'ta', name: 'Tamil' },
-    { code: 'te', name: 'Telugu' },
-    { code: 'bn', name: 'Bengali' },
-    { code: 'mr', name: 'Marathi' },
-    { code: 'gu', name: 'Gujarati' },
-    { code: 'kn', name: 'Kannada' }
+    { code: 'hindi', label: 'Hindi' },
+    { code: 'tamil', label: 'Tamil' },
+    { code: 'telugu', label: 'Telugu' },
+    { code: 'bengali', label: 'Bengali' },
+    { code: 'marathi', label: 'Marathi' },
+    { code: 'gujarati', label: 'Gujarati' },
+    { code: 'kannada', label: 'Kannada' },
+    { code: 'malayalam', label: 'Malayalam' },
   ];
+
+  if (position === 'input') {
+    return (
+      <div className="language-badge">
+        <select
+          value={selectedLang}
+          onChange={(e) => onLanguageChange(e.target.value)}
+          className="language-select-input"
+        >
+          {languages.map(lang => (
+            <option key={lang.code} value={lang.code}>
+              {lang.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 
   return (
     <select
-      className="form-select language-select"
       value={selectedLang}
-      onChange={(e) => onLangChange(e.target.value)}
+      onChange={(e) => onLanguageChange(e.target.value)}
+      className="language-dropdown"
     >
       {languages.map(lang => (
         <option key={lang.code} value={lang.code}>
-          {lang.name}
+          {lang.label}
         </option>
       ))}
     </select>

@@ -1,0 +1,65 @@
+import React from 'react';
+import LanguageSelector from './LanguageSelector';
+import VoiceInput from './VoiceInput';
+
+const InputBar = ({
+  inputText,
+  setInputText,
+  selectedLang,
+  onLanguageChange,
+  onSendMessage,
+  isRecording,
+  onToggleRecording,
+  onEmojiClick
+}) => {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onSendMessage();
+    }
+  };
+
+  return (
+    <div className="input-bar">
+      <div className="input-container-wrapper">
+        <LanguageSelector
+          selectedLang={selectedLang}
+          onLanguageChange={onLanguageChange}
+          position="input"
+        />
+
+        <input
+          type="text"
+          className="message-input-field"
+          placeholder="Speak or Type a message..."
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+
+        <button className="emoji-btn" onClick={onEmojiClick} title="Add Emoji">
+          😊
+        </button>
+
+        <VoiceInput
+          isRecording={isRecording}
+          onToggleRecording={onToggleRecording}
+        />
+
+        <button 
+          className="send-message-btn" 
+          onClick={onSendMessage}
+          title="Send Message"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div className="sparkle-decoration">✨</div>
+    </div>
+  );
+};
+
+export default InputBar;

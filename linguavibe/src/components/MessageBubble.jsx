@@ -1,47 +1,57 @@
 import React from 'react';
-import '../styles/MessageBubble.css';
 
 const MessageBubble = ({ message, emojiMode }) => {
-  const { original, translation, isUserA, isVoice } = message;
-
+  const isUserA = message.sender === 'A';
+  
   const getRandomEmoji = () => {
-    const emojis = ['😊', '✨', '🌟', '💬', '🎵', '💫', '🌈', '⭐'];
+    const emojis = ['😊', '😃', '✨', '💫'];
     return emojis[Math.floor(Math.random() * emojis.length)];
   };
 
+  // Avatar component
+  const Avatar = ({ user }) => (
+    <div className={`avatar ${user === 'A' ? 'avatar-a' : 'avatar-b'}`}>
+      {user}
+    </div>
+  );
+
   return (
-    <div
-      className={`message-row ${isUserA ? 'user-a' : 'user-b'}`}
-      style={{ animation: 'slideIn 0.4s ease' }}
-    >
-      <div className={`avatar-circle ${isUserA ? 'a' : 'b'}`}>
-        {isUserA ? 'A' : 'B'}
-      </div>
-
-      <div className={`bubble ${isUserA ? 'a' : 'b'}`}>
-        {isVoice && (
-          <div className="voice-tag">
-            <span>🎤</span>
-            <span>Voice message</span>
+    <div className={`message-wrapper ${isUserA ? 'message-left' : 'message-right'}`}>
+      {isUserA && <Avatar user="A" />}
+      
+      <div className={`message-bubble ${isUserA ? 'bubble-a' : 'bubble-b'}`}>
+        {message.isVoice ? (
+          <div className="voice-message">
+            <button className="voice-play-btn">
+              {message.isPlaying ? '⏸' : '▶'}
+            </button>
+            <div className="waveform">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span className="voice-label">User {message.sender}: Voice message...</span>
           </div>
+        ) : (
+          <>
+            <div className="message-primary">
+              {message.text}
+              {emojiMode && <span className="bubble-emoji">{getRandomEmoji()}</span>}
+            </div>
+            <div className="message-secondary">
+              {message.translation}
+              {emojiMode && <span className="bubble-emoji">{getRandomEmoji()}</span>}
+            </div>
+          </>
         )}
-
-        <div className="original-text">
-          {original}
-          {emojiMode && <span className="emoji-inline"> {getRandomEmoji()}</span>}
-        </div>
-
-        {translation && (
-          <div className="translation-text">
-            {translation}
-            {emojiMode && <span className="emoji-inline"> {getRandomEmoji()}</span>}
-          </div>
-        )}
-
-        {isVoice && (
-          <button className="play-btn">▶ Play</button>
+        {message.hasAudio && !message.isVoice && (
+          <button className="audio-icon">🔊</button>
         )}
       </div>
+      
+      {!isUserA && <Avatar user="B" />}
     </div>
   );
 };
